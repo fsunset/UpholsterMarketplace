@@ -1,0 +1,39 @@
+{% if company.logo %}
+	{% if 'http' in company.logo %}
+		{% set companyLogo = company.logo %}
+	{% else %}
+		{% set companyLogo = asset('build/img/company/logo/' ~ company.logo) %}
+	{% endif %}
+{% else %}
+	{% set companyLogo = 'https://www.gamian.eu/wp-content/uploads/default-placeholder.png' %}
+{% endif %}
+
+{% set companySlug = company.name|lower|replace({' ': '-', '\&':'and'}) %}
+    
+
+<div class="cell medium-6 large-4 custom-card-container">
+	<div class="cell custom-card company-custom-card">
+		<div class="grid-x grid-margin-x align-middle">
+			<div class="cell small-12 medium-4 custom-card-img">
+	            <a href="{{ path('profile', { 'companyId': company.id, 'companyName': companySlug }) }}">
+	                <img class="thumbnail no-bottom-margin" src="{{ companyLogo }}">
+	            </a>
+			</div>
+			<div class="cell small-12 medium-8 clearfix">
+				<h3>
+	                <a href="{{ path('profile', { 'companyId': company.id, 'companyName': companySlug }) }}">
+	                    {{ company.name }}
+	                </a>
+	            </h3>
+	            {% if company.tagline != '' %}
+		            <p class="no-bottom-margin">
+		            	{{ company.tagline|length > 55 ? company.tagline|slice(0, 55) ~ '...' : company.tagline  }}
+		            </p>
+		            {% if company.tagline|length > 55 %}
+		            	<a href="" class="float-right">View more</a>
+		            {% endif %}
+	            {% endif %}
+			</div>
+		</div>	
+	</div>
+</div>

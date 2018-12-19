@@ -12,6 +12,7 @@
                     <a href="{{ company.website }}" target="_blank">{{ company.name|title }}</a>
                 </h1>
                 <p class="lead no-bottom-margin">{{ company.tagline }}</p>
+                <p class="no-bottom-margin">{{ company.phone }}</p>
                 <p>{{ company.address1 }}{% if company.address2 %}, {{ company.address2 }}{% endif %}
                 </p>
                 <a href="{{ path('home') }}" class="button hollow">Back to Search Page</a>

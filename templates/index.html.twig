@@ -9,7 +9,7 @@
 
 			<div id="searchCompanyFormError" class="small-12 medium-6 large-4 cell hide">
 	            <div class="callout alert">
- 					<p>All fields are required</p>
+ 					<p>All fields are required.</p>
 				</div>
 			</div>
         </div>
@@ -56,40 +56,13 @@
                 <h2 class="display-inline-block">Top <span class="state-top-companies"></span> Upholsterers</h2> | <a href="">See All <span class="state-top-companies"></span> Upholsterers</a>
             </div>
         </div>
-        <div class="grid-x grid-padding-x">
-        	{% for company in companies %}
-        		{% if company.logo %}
-        			{% if 'http' in company.logo %}
-        				{% set companyLogo = company.logo %}
-        			{% else %}
-        				{% set companyLogo = asset('build/img/company/logo/' ~ company.logo) %}
-        			{% endif %}
-        		{% else %}
-        			{% set companyLogo = 'https://placehold.it/200x200' %}
-        		{% endif %}
 
-				{% set companySlug = company.name|lower|replace({' ': '-', '\&':'and'}) %}
-        		
-	            <div class="small-12 medium-6 large-4 cell custom-card-container">
-	            	<div class="grid-x grid-padding-x custom-card align-middle">
-	            		<div class="small-12 medium-4 cell custom-card-img">
-	                        <a href="{{ path('profile', { 'companyId': company.id, 'companyName': companySlug }) }}">
-	                            <img class="thumbnail" src="{{ companyLogo }}">
-	                        </a>
-	            		</div>
-	            		<div class="small-12 medium-8 cell">
-	            			<h3>
-	                            <a href="{{ path('profile', { 'companyId': company.id, 'companyName': companySlug }) }}">
-	                                {{ company.name }}
-	                            </a>
-	                        </h3>
-	                        <p>
-	                        	{{ company.tagline }}
-	                        </p>	
-	            		</div>
-	            	</div>
-	            </div>
-            {% endfor %}
+        <div id="companiesContainer">
+        	<div class="grid-x grid-margin-x">
+	        	{% for company in companies %}
+		            {% include './partials/companyCard.html.twig' with {'company': company} %}
+	            {% endfor %}
+	        </div>
         </div>
     </article>
 {% endblock %}
@@ -105,7 +78,8 @@
 
 			let selectedState = selectedCounty = selectedCity = '',
 				$searchCompanyForm = $("#searchCompanyForm"),
-				$searchCompanyFormError = $("#searchCompanyFormError");
+				$searchCompanyFormError = $("#searchCompanyFormError"),
+				$companiesContainer = $("#companiesContainer");
 
 		    $(document)
 		    	.on("change", "#state, #county, #city", function() {
@@ -144,12 +118,29 @@
 					$searchCompanyFormError.removeClass("hide");
 				}
 			});
-		});
 
-    	
-	    function performCompanySearch() {
-	    	console.log("search!");
-	    }
+			function performCompanySearch() {
+		    	$.ajax({
+		    		type: "POST",
+		    		url: "{{ path('searchCompany') }}",
+		    		data: {
+		    			"selectedState": selectedState,
+		    			"selectedCounty": selectedCounty,
+		    			"selectedCity": selectedCity
+		    		},
+		    		beforeSend: function() {
+		    			$companiesContainer.html("<div class='small-12 cell text-center'><img src='{{ asset('build/img/spinner.gif') }}'></div>");
+				    },
+		    		success: function(companies) {
+		    			$companiesContainer.html("<div class='grid-x grid-margin-x'>" + companies.htmlCode + "</div>");
+		    		},
+		    		error: function(xhr, status, error) {
+		    			var err = eval("(" + xhr.responseText + ")");
+		    			alert(err.Message);
+		    		}
+		    	});
+		    }
+		});
 
 	    let whos = request = null;
 		function getplaces(gid, src) {

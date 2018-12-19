@@ -37,7 +37,7 @@ class Company
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="bigint")
      */
     private $phone;
 
