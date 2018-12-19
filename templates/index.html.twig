@@ -79,9 +79,11 @@
 			let selectedState = selectedCounty = selectedCity = '',
 				$searchCompanyForm = $("#searchCompanyForm"),
 				$searchCompanyFormError = $("#searchCompanyFormError"),
-				$companiesContainer = $("#companiesContainer");
+				$companiesContainer = $("#companiesContainer"),
+				$stateTopCompanies = $(".state-top-companies");
 
 		    $(document)
+		    	// Set location vars for AJAX call
 		    	.on("change", "#state, #county, #city", function() {
 		    		let thisId = $(this).attr("id");
 
@@ -99,6 +101,8 @@
 		    			break;
 		    		}
 		    	})
+			    
+			    // Run function to search each dropdown "child"
 			    .on("change", "#state, #county", function() {
 			    	let $this = $(this),
 			    		elementValue = $this.val(),
@@ -111,7 +115,7 @@
 			$searchCompanyForm.on("submit", function(e) {
 				e.preventDefault();
 
-				if (selectedState != '' && selectedCounty != '' && selectedCity != '') {
+				if (selectedState != '' && selectedCounty != '' && selectedCity != '' && selectedState != 'Select' && selectedCounty != 'Select' && selectedCity != 'Select') {
 					$searchCompanyFormError.addClass("hide");
 					performCompanySearch();
 				} else {
@@ -119,6 +123,7 @@
 				}
 			});
 
+			// Get companies by location
 			function performCompanySearch() {
 		    	$.ajax({
 		    		type: "POST",
@@ -132,6 +137,7 @@
 		    			$companiesContainer.html("<div class='small-12 cell text-center'><img src='{{ asset('build/img/spinner.gif') }}'></div>");
 				    },
 		    		success: function(companies) {
+		    			$stateTopCompanies.html(selectedState);
 		    			$companiesContainer.html("<div class='grid-x grid-margin-x'>" + companies.htmlCode + "</div>");
 		    		},
 		    		error: function(xhr, status, error) {
@@ -142,6 +148,8 @@
 		    }
 		});
 
+	    
+		// Geonames JS code
 	    let whos = request = null;
 		function getplaces(gid, src) {
 			whos = src
