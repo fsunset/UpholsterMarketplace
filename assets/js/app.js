@@ -3,5 +3,17 @@ require("../css/app.scss");
 
 // Call jQuery
 var $ = require("jquery");
+// create global $ and jQuery variables
+global.$ = global.jQuery = $;
 
-console.log("Hello from Webpack Encore! Edit me in assets/js/app.js");
+
+// Fontawesome Files
+require("@fortawesome/fontawesome-free/css/all.min.css");
+require("@fortawesome/fontawesome-free/js/all.js");
+
+// Foundation Files
+require("./what-input.js");
+require("./foundation.js");
+
+// Initialize Foundation
+$(document).foundation();

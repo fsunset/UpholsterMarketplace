@@ -1,6 +1,177 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Hi!</h1>
-    <p>Your number: {{ number }}</p>
+    <article class="grid-container">
+        <div class="grid-x top-margin-2em">
+            <div class="cell">
+                <h1>Find an Upholsterer in Your Area</h1>
+            </div>
+
+			<div id="searchCompanyFormError" class="small-12 medium-6 large-4 cell hide">
+	            <div class="callout alert">
+ 					<p>All fields are required</p>
+				</div>
+			</div>
+        </div>
+
+        <div class="grid-x search-form-container">
+		    <div class="cell">
+		        <form id="searchCompanyForm">
+		            <div class="grid-container">
+		                <div class="grid-x grid-padding-x align-middle">
+		                    <div class="large-3 cell">
+		                        <label class="top-margin-0-5em">State
+		                            <select name="state" id="state">
+										<option value=""></option>
+									</select>
+		                        </label>
+		                    </div>
+		                    <div class="large-3 cell">
+		                        <label class="top-margin-0-5em">County
+		                            <select name="county" id="county">
+										<option value=""></option>
+									</select>
+		                        </label>
+		                    </div>
+		                    <div class="large-3 cell">
+		                        <label class="top-margin-0-5em">City
+		                            <select name="city" id="city">
+										<option value=""></option>
+									</select>
+		                        </label>
+		                    </div>
+		                    <div class="large-3 cell text-center">
+		                        <input type="submit" class="button no-bottom-margin expanded" value="Search">
+		                    </div>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
+		</div>
+    </article>
+
+    <article class="grid-container">
+        <div class="grid-x">
+            <div class="cell top-margin-2em bottom-margin-1em">
+                <h2 class="display-inline-block">Top <span class="state-top-companies"></span> Upholsterers</h2> | <a href="">See All <span class="state-top-companies"></span> Upholsterers</a>
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+        	{% for company in companies %}
+        		{% if company.logo %}
+        			{% if 'http' in company.logo %}
+        				{% set companyLogo = company.logo %}
+        			{% else %}
+        				{% set companyLogo = asset('build/img/company/logo/' ~ company.logo) %}
+        			{% endif %}
+        		{% else %}
+        			{% set companyLogo = 'https://placehold.it/200x200' %}
+        		{% endif %}
+
+				{% set companySlug = company.name|lower|replace({' ': '-', '\&':'and'}) %}
+        		
+	            <div class="small-12 medium-6 large-4 cell custom-card-container">
+	            	<div class="grid-x grid-padding-x custom-card align-middle">
+	            		<div class="small-12 medium-4 cell custom-card-img">
+	                        <a href="{{ path('profile', { 'companyId': company.id, 'companyName': companySlug }) }}">
+	                            <img class="thumbnail" src="{{ companyLogo }}">
+	                        </a>
+	            		</div>
+	            		<div class="small-12 medium-8 cell">
+	            			<h3>
+	                            <a href="{{ path('profile', { 'companyId': company.id, 'companyName': companySlug }) }}">
+	                                {{ company.name }}
+	                            </a>
+	                        </h3>
+	                        <p>
+	                        	{{ company.tagline }}
+	                        </p>	
+	            		</div>
+	            	</div>
+	            </div>
+            {% endfor %}
+        </div>
+    </article>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+    <script src="http://vikku.info/programming/js/geodata-jsr-class.js"></script>
+    <script>
+		$(function() {
+			// Load All U.S.A. States
+			getplaces(6252001,'state');
+
+			let selectedState = selectedCounty = selectedCity = '',
+				$searchCompanyForm = $("#searchCompanyForm"),
+				$searchCompanyFormError = $("#searchCompanyFormError");
+
+		    $(document)
+		    	.on("change", "#state, #county, #city", function() {
+		    		let thisId = $(this).attr("id");
+
+		    		switch(thisId) {
+		    			case "state":
+		    			selectedState = $("#" + thisId + " option:selected").text();
+		    			selectedCounty = selectedCity = '';
+		    			break;
+		    			case "county":
+		    			selectedCounty = $("#" + thisId + " option:selected").text();
+		    			selectedCity = '';
+		    			break;
+		    			case "city":
+		    			selectedCity = $("#" + thisId + " option:selected").text();
+		    			break;
+		    		}
+		    	})
+			    .on("change", "#state, #county", function() {
+			    	let $this = $(this),
+			    		elementValue = $this.val(),
+			    		elementType = $this.attr("id"),
+			    		param = elementType == "state" ? "county" : "city";
+
+			    	getplaces(elementValue, param);
+			    });
+			
+			$searchCompanyForm.on("submit", function(e) {
+				e.preventDefault();
+
+				if (selectedState != '' && selectedCounty != '' && selectedCity != '') {
+					$searchCompanyFormError.addClass("hide");
+					performCompanySearch();
+				} else {
+					$searchCompanyFormError.removeClass("hide");
+				}
+			});
+		});
+
+    	
+	    function performCompanySearch() {
+	    	console.log("search!");
+	    }
+
+	    let whos = request = null;
+		function getplaces(gid, src) {
+			whos = src
+			request = "http://www.geonames.org/childrenJSON?geonameId="+gid+"&callback=listPlaces&style=short";
+			aObj = new JSONscriptRequest(request);
+			aObj.buildScriptTag();
+			aObj.addScriptTag();
+		}
+
+		function listPlaces(jData) {
+			counts = jData.geonames.length<jData.totalResultsCount ? jData.geonames.length : jData.totalResultsCount
+			who = document.getElementById(whos)
+			who.options.length = 0;
+
+			if(counts)who.options[who.options.length] = new Option('Select','')
+			else who.options[who.options.length] = new Option('No Data Available','NULL')
+					
+			for(let i=0; i<counts; i++)
+				who.options[who.options.length] = new Option(jData.geonames[i].name, jData.geonames[i].geonameId)
+
+			jData = null		
+		}
+    </script>
 {% endblock %}

@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta charset="utf-8" />
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}Upholster Marketplace{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
+        <div class="header">
+            <img src="{{ asset('build/img/header-BG-small.png') }}" class="show-for-small-only">
+            <img src="{{ asset('build/img/header-BG-medium.png') }}" class="show-for-medium-only">
+            <img src="{{ asset('build/img/header-BG-large.png') }}" class="show-for-large">
+        </div>
+
         {% block body %}{% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+        {% block secondary_javascripts %}
+        {% endblock %}
+        
+        <div class="footer">
+            <img src="{{ asset('build/img/footer-BG-small.png') }}" class="show-for-small-only">
+            <img src="{{ asset('build/img/footer-BG-medium.png') }}" class="show-for-medium-only">
+            <img src="{{ asset('build/img/footer-BG-large.png') }}" class="show-for-large">
+        </div>
     </body>
 </html>
