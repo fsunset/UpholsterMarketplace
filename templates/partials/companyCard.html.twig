@@ -30,7 +30,7 @@
 		            	{{ company.tagline|length > 55 ? company.tagline|slice(0, 55) ~ '...' : company.tagline  }}
 		            </p>
 		            {% if company.tagline|length > 55 %}
-		            	<a href="" class="float-right">View more</a>
+		            	<a href="{{ path('profile', { 'companyId': company.id, 'companyName': companySlug }) }}" class="float-right">View more</a>
 		            {% endif %}
 	            {% endif %}
 			</div>

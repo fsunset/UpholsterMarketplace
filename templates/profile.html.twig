@@ -99,38 +99,50 @@
                         </div>
                     </div>
 
-                    <form>
+                    <form data-abide novalidate>
                         <div class="grid-x grid-padding-x">
                             <div class="small-12 cell">
                                 <label>
-                                    <input type="text" placeholder="My Name">
+                                    <input id="name" name="name" type="text" placeholder="My Name" aria-errormessage="nameErrorField" required>
+                                    <span class="form-error" id="nameErrorField">
+                                        Please fill your name out.
+                                    </span>
                                 </label>
                             </div>
                             <div class="small-12 cell">
                                 <label>
-                                    <input type="text" placeholder="My Phone">
+                                    <input id="phone" name="phone" type="text" placeholder="My Phone" aria-errormessage="phoneErrorField" required>
+                                    <span class="form-error" id="phoneErrorField">
+                                        Please fill your phone out.
+                                    </span>
                                 </label>
                             </div>
                             <div class="small-12 cell">
                                 <label>
-                                    <input type="text" placeholder="My Email">
+                                    <input id="email" name="email" type="email" placeholder="My Email" aria-errormessage="EmailErrorField" pattern="email" required>
+                                    <span class="form-error" id="EmailErrorField">
+                                        Please fill your email out. This need to be a valid email address.
+                                    </span>
                                 </label>
                             </div>
                             <div class="small-12 cell">
                                 <label>
-                                    <select>
-                                        <option value="husker">Services Desired</option>
-                                            <option value="">Furniture Reupholstery</option>
-                                            <option value="">Replacement Cushions</option>
-                                            <option value="">Drapery</option>
-                                            <option value="">Furniture Repair</option>
-                                            <option value="">Other</option>
+                                    <select id="servicesDesired" name="servicesDesired" aria-errormessage="serviceDesiredErrorField" required>
+                                        <option value="">Services Desired</option>
+                                        <option value="Furniture Reupholstery">Furniture Reupholstery</option>
+                                        <option value="Replacement Cushions">Replacement Cushions</option>
+                                        <option value="Drapery">Drapery</option>
+                                        <option value="Furniture Repair">Furniture Repair</option>
+                                        <option value="Other">Other</option>
                                     </select>
+                                    <span class="form-error" id="serviceDesiredErrorField">
+                                        Please select the service you're looking for.
+                                    </span>
                                 </label>
                             </div>
                             <div class="small-12 cell">
                                 <label>
-                                    <textarea placeholder="My Message to company"></textarea>
+                                    <textarea id="message" name="message" placeholder="My Message to company"></textarea>
                                 </label>
                             </div>
                             <div class="small-12 cell">

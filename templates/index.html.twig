@@ -16,28 +16,37 @@
 
         <div class="grid-x search-form-container">
 		    <div class="cell">
-		        <form id="searchCompanyForm">
+		        <form id="searchCompanyForm" data-abide novalidate>
 		            <div class="grid-container">
 		                <div class="grid-x grid-padding-x align-middle">
 		                    <div class="large-3 cell">
 		                        <label class="top-margin-0-5em">State
-		                            <select name="state" id="state">
-										<option value=""></option>
+		                            <select name="state" id="state" aria-errormessage="stateErrorField" required>
+										<option value="">Loading...</option>
 									</select>
+									<span class="form-error" id="stateErrorField">
+                                        Please select an state.
+                                    </span>
 		                        </label>
 		                    </div>
 		                    <div class="large-3 cell">
 		                        <label class="top-margin-0-5em">County
-		                            <select name="county" id="county">
+									<select name="county" id="county" aria-errormessage="countyErrorField" required>
 										<option value=""></option>
 									</select>
+									<span class="form-error" id="countyErrorField">
+                                        Please select an county.
+                                    </span>
 		                        </label>
 		                    </div>
 		                    <div class="large-3 cell">
 		                        <label class="top-margin-0-5em">City
-		                            <select name="city" id="city">
+									<select name="city" id="city" aria-errormessage="cityErrorField" required>
 										<option value=""></option>
 									</select>
+									<span class="form-error" id="cityErrorField">
+                                        Please select an city.
+                                    </span>
 		                        </label>
 		                    </div>
 		                    <div class="large-3 cell text-center">
@@ -80,7 +89,9 @@
 				$searchCompanyForm = $("#searchCompanyForm"),
 				$searchCompanyFormError = $("#searchCompanyFormError"),
 				$companiesContainer = $("#companiesContainer"),
-				$stateTopCompanies = $(".state-top-companies");
+				$stateTopCompanies = $(".state-top-companies"),
+				$countyDropdown = $("#county"),
+				$cityDropdown = $("#city");
 
 		    $(document)
 		    	// Set location vars for AJAX call
@@ -91,10 +102,13 @@
 		    			case "state":
 		    			selectedState = $("#" + thisId + " option:selected").text();
 		    			selectedCounty = selectedCity = '';
+		    			$countyDropdown.html("<option value=''>Loading...</option>");
+		    			$cityDropdown.html("");
 		    			break;
 		    			case "county":
 		    			selectedCounty = $("#" + thisId + " option:selected").text();
 		    			selectedCity = '';
+		    			$cityDropdown.html("<option value=''>Loading...</option>");
 		    			break;
 		    			case "city":
 		    			selectedCity = $("#" + thisId + " option:selected").text();
@@ -116,10 +130,7 @@
 				e.preventDefault();
 
 				if (selectedState != '' && selectedCounty != '' && selectedCity != '' && selectedState != 'Select' && selectedCounty != 'Select' && selectedCity != 'Select') {
-					$searchCompanyFormError.addClass("hide");
 					performCompanySearch();
-				} else {
-					$searchCompanyFormError.removeClass("hide");
 				}
 			});
 
