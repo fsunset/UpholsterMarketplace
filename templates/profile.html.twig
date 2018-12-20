@@ -99,9 +99,11 @@
                         </div>
                     </div>
 
-                    <form data-abide novalidate>
+                    <form id="customerForm" data-abide novalidate>
                         <div class="grid-x grid-padding-x">
                             <div class="small-12 cell">
+                                <div id="customerFormAlert" class="callout primary hide"></div>
+
                                 <label>
                                     <input id="name" name="name" type="text" placeholder="My Name" aria-errormessage="nameErrorField" required>
                                     <span class="form-error" id="nameErrorField">

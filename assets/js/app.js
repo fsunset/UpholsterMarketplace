@@ -17,3 +17,42 @@ require("./foundation.js");
 
 // Initialize Foundation
 $(document).foundation();
+
+// Saving data from customer, profile page form
+$(function() {
+	$(document)
+		.on("submit", "#customerForm", function(e) {
+			e.preventDefault();
+
+			let $this = $(this),
+				nameFieldVal = $("#name").val(),
+				phoneFieldVal = $("#phone").val(),
+				emailFieldVal = $("#email").val(),
+				servicesDesiredFieldVal = $("#servicesDesired").val(),
+				messageFieldVal = $("#message").val(),
+				$customerFormAlert = $("#customerFormAlert");
+
+			$.ajax({
+				type: "POST",
+				url: "/customerData",
+				data: {
+					"nameFieldVal": nameFieldVal,
+					"phoneFieldVal": phoneFieldVal,
+					"emailFieldVal": emailFieldVal,
+					"servicesDesiredFieldVal": servicesDesiredFieldVal,
+					"messageFieldVal": messageFieldVal,
+				},
+				beforeSend: function() {
+
+				},
+				success: function(data) {
+					$this[0].reset();
+					$customerFormAlert.html("<p>" + data.alert + "</p>").removeClass("hide");
+				},
+				error: function(xhr) {
+					var err = eval("(" + xhr.responseText + ")");
+					alert(err.Message);
+				}
+			});
+		});
+});

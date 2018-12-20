@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Company;
+use App\Entity\Customer;
 
 
 class MainController extends AbstractController {
@@ -58,6 +59,30 @@ class MainController extends AbstractController {
     		}
 
     		return $this->json(array("htmlCode" => $htmlCode), $status = 200, $headers = array(), $context = array());
+    	}
+
+    	throw $this->createNotFoundException('Request incorrect');
+    }
+
+    /**
+	 * @Route("/customerData", name="customerData")
+	 */
+    public function customerData(Request $request) {
+    	if ($request->isXmlHttpRequest()) {
+    		
+    		$entityManager = $this->getDoctrine()->getManager();
+
+	        $customer = new Customer();
+	        $customer->setName($request->request->get('nameFieldVal'));
+	        $customer->setPhone($request->request->get('phoneFieldVal'));
+	        $customer->setEmail($request->request->get('emailFieldVal'));
+	        $customer->setServicesDesired($request->request->get('servicesDesiredFieldVal'));
+	        $customer->setMessage($request->request->get('messageFieldVal'));
+
+	        $entityManager->persist($customer);
+	        $entityManager->flush();
+
+	        return $this->json(array("alert" => "Thanks, your message has been sent! We'll be in touch soon."), $status = 200, $headers = array(), $context = array());
     	}
 
     	throw $this->createNotFoundException('Request incorrect');
