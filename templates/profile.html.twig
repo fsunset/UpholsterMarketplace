@@ -27,6 +27,8 @@
             <div class="cell medium-6">
                 <p>{{ company.description|nl2br|raw }}</p>
             </div>
+
+            {# Slider #}
             <div class="cell medium-6">
                 <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
                     <div class="orbit-wrapper">
@@ -60,6 +62,7 @@
         </div>
 
         <div class="grid-x grid-padding-x top-margin-2em bottom-margin-2em">
+            {# Services Offered #}
             <div class="cell medium-4">
                 <div class="grid-container top-margin-1em">
                     <div class="grid-x grid-padding-x">
@@ -69,7 +72,7 @@
                             {% set specialtiesArray = company.specialty1|split('|') %}
                             <ul>
                                 {% for specialty in specialtiesArray %}
-                                    <li>{{ specialty }}</li>
+                                    <li>{{ specialty|title }}</li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -77,20 +80,22 @@
                 </div>
             </div>
 
+            {# Areas Served #}
             <div class="cell medium-4">
                 <div class="grid-container top-margin-1em">
                     <div class="grid-x grid-padding-x">
                         <div class="small-12 cell">
                             <h2>Areas Served</h2>
                             <ul>
-                                <li>{{ company.county }}</li>
-                                <li>{{ company.city }}</li>
+                                <li>{{ company.county|title }}</li>
+                                <li>{{ company.city|title }}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
 
+            {# Get in touch form #}
             <div class="cell medium-4">
                 <div class="grid-container top-margin-1em">
                     <div class="grid-x grid-padding-x">
@@ -144,7 +149,7 @@
                             </div>
                             <div class="small-12 cell">
                                 <label>
-                                    <textarea id="message" name="message" placeholder="My Message to company"></textarea>
+                                    <textarea id="message" name="message" placeholder="My Message to company - Optional -"></textarea>
                                 </label>
                             </div>
                             <div class="small-12 cell">
