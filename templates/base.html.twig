@@ -15,6 +15,20 @@
             <img src="{{ asset('build/img/header-BG-large.png') }}" class="show-for-large">
         </div>
 
+        {# Provisional link to Home Page #}
+        <article class="grid-container">
+            <div class="grid-x top-margin-2em">
+                <div class="cell text-right">
+                    {% if app.request.get('_route') != "home" %}
+                        <a href="{{ path('home') }}">Find an Upholsterer</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Admin Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+
+
         {% block body %}{% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
