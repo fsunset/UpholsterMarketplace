@@ -62,7 +62,11 @@
     <article class="grid-container">
         <div class="grid-x">
             <div class="cell top-margin-2em bottom-margin-1em">
-                <h2 class="display-inline-block">Top <span class="state-top-companies"></span> Upholsterers</h2> | <a href="">See All <span class="state-top-companies"></span> Upholsterers</a>
+                <h2 class="display-inline-block">Top <span class="city-top-companies"></span> Upholsterers</h2> | <a href="">See All <span class="city-top-companies"></span> Upholsterers</a>
+
+                <p>
+                	Individuals and companies listed here are local upholstery companies that match your search. Upholster.com does not verify the work of these local vendors and can not vouch for the quality of their work.
+                </p>
             </div>
         </div>
 
@@ -89,7 +93,7 @@
 				$searchCompanyForm = $("#searchCompanyForm"),
 				$searchCompanyFormError = $("#searchCompanyFormError"),
 				$companiesContainer = $("#companiesContainer"),
-				$stateTopCompanies = $(".state-top-companies"),
+				$cityTopCompanies = $(".city-top-companies"),
 				$countyDropdown = $("#county"),
 				$cityDropdown = $("#city");
 
@@ -148,7 +152,7 @@
 		    			$companiesContainer.html("<div class='small-12 cell text-center'><img src='{{ asset('build/img/spinner.gif') }}'></div>");
 				    },
 		    		success: function(companies) {
-		    			$stateTopCompanies.html(selectedState);
+		    			$cityTopCompanies.html(selectedCity);
 		    			$companiesContainer.html("<div class='grid-x grid-margin-x'>" + companies.htmlCode + "</div>");
 		    		},
 		    		error: function(xhr, status, error) {

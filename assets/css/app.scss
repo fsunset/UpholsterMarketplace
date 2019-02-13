@@ -27,7 +27,6 @@ $soft-grey:         #f5f5f5;
 .no-padding-left { padding-left: 0 !important; }
 .no-padding-right { padding-right: 0 !important; }
 
-
 /*
 * Provisional Header & Footer
 */
@@ -99,4 +98,9 @@ $soft-grey:         #f5f5f5;
 			}
 		}
 	}
+}
+
+.form-container {
+	border: 1px solid;
+	padding-top: 1em;
 }

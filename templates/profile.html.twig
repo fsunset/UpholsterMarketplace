@@ -4,18 +4,29 @@
     Profile | {{ company.name|title }}
 {% endblock %}
 
+{% if company.logo %}
+    {% if 'http' in company.logo %}
+        {% set companyLogo = company.logo %}
+    {% else %}
+        {% set companyLogo = asset('build/img/company/logo/' ~ company.logo) %}
+    {% endif %}
+{% else %}
+    {% set companyLogo = 'https://www.gamian.eu/wp-content/uploads/default-placeholder.png' %}
+{% endif %}
+
 {% block body %}
     <article class="grid-container">
-        <div class="grid-x text-center top-margin-2em">
-            <div class="cell">
-                <h1>
-                    <a href="{{ company.website }}" target="_blank">{{ company.name|title }}</a>
-                </h1>
+        <div class="grid-x top-margin-2em">
+            <div class="cell medium-6 text-center bottom-margin-2em">
+                <img class="thumbnail no-bottom-margin" src="{{ companyLogo }}">
+            </div>
+            <div class="cell medium-6">
+                <h1>{{ company.name|title }}</h1>
                 <p class="lead no-bottom-margin">{{ company.tagline }}</p>
                 <p class="no-bottom-margin">{{ company.phone }}</p>
                 <p>{{ company.address1 }}{% if company.address2 %}, {{ company.address2 }}{% endif %}
                 </p>
-                <a href="{{ path('home') }}" class="button hollow">Back to Search Page</a>
+                <a href="{{ company.website }}" target="_blank" class="button hollow">Visit Website</a>
             </div>
         </div>
     </article>
@@ -63,41 +74,33 @@
 
         <div class="grid-x grid-padding-x top-margin-2em bottom-margin-2em">
             {# Services Offered #}
-            <div class="cell medium-4">
-                <div class="grid-container top-margin-1em">
-                    <div class="grid-x grid-padding-x">
-                        <div class="small-12 cell">
-                            <h2>Services Offered</h2>
-                            
-                            {% set specialtiesArray = company.specialty1|split('|') %}
-                            <ul>
-                                {% for specialty in specialtiesArray %}
-                                    <li>{{ specialty|title }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <div class="cell medium-6">
+                <h2>Services Offered</h2>
+
+                <p>{{ company.specialty1 }}</p>
             </div>
 
             {# Areas Served #}
-            <div class="cell medium-4">
-                <div class="grid-container top-margin-1em">
-                    <div class="grid-x grid-padding-x">
-                        <div class="small-12 cell">
-                            <h2>Areas Served</h2>
-                            <ul>
-                                <li>{{ company.county|title }}</li>
-                                <li>{{ company.city|title }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <div class="cell medium-3">
+                <h2>Areas Served</h2>
+                <ul>
+                    <li>{{ company.county|title }}</li>
+                    <li>{{ company.city|title }}</li>
+                </ul>
+            </div>
+
+            {# Business Hours #}
+            <div class="cell medium-3">
+                <h2>Business Hours</h2>
+
+                <p class="no-bottom-margin">Mon - Fri: 10am - 6pm</p>
+                <p class="no-bottom-margin">Saturday: 11am - 5pm</p>
+                <p class="no-bottom-margin">Sunday: Closed</p>
             </div>
 
             {# Get in touch form #}
-            <div class="cell medium-4">
-                <div class="grid-container top-margin-1em">
+            <div class="cell">
+                <div class="grid-container top-margin-1em form-container">
                     <div class="grid-x grid-padding-x">
                         <div class="small-12 cell">
                             <h2>Get in Touch</h2>
@@ -106,33 +109,34 @@
 
                     <form id="customerForm" data-abide novalidate>
                         <div class="grid-x grid-padding-x">
-                            <div class="small-12 cell">
+                            <div class="cell">
                                 <div id="customerFormAlert" class="callout primary hide"></div>
-
+                            </div>
+                            <div class="small-12 medium-6 large-3 cell">
                                 <label>
-                                    <input id="name" name="name" type="text" placeholder="My Name" aria-errormessage="nameErrorField" required>
+                                    <input id="name" name="name" type="text" placeholder="Name" aria-errormessage="nameErrorField" required>
                                     <span class="form-error" id="nameErrorField">
                                         Please fill your name out.
                                     </span>
                                 </label>
                             </div>
-                            <div class="small-12 cell">
+                            <div class="small-12 medium-6 large-3 cell">
                                 <label>
-                                    <input id="phone" name="phone" type="text" placeholder="My Phone" aria-errormessage="phoneErrorField" required>
+                                    <input id="phone" name="phone" type="text" placeholder="Phone" aria-errormessage="phoneErrorField" required>
                                     <span class="form-error" id="phoneErrorField">
                                         Please fill your phone out.
                                     </span>
                                 </label>
                             </div>
-                            <div class="small-12 cell">
+                            <div class="small-12 medium-6 large-3 cell">
                                 <label>
-                                    <input id="email" name="email" type="email" placeholder="My Email" aria-errormessage="EmailErrorField" pattern="email" required>
+                                    <input id="email" name="email" type="email" placeholder="Email" aria-errormessage="EmailErrorField" pattern="email" required>
                                     <span class="form-error" id="EmailErrorField">
                                         Please fill your email out. This need to be a valid email address.
                                     </span>
                                 </label>
                             </div>
-                            <div class="small-12 cell">
+                            <div class="small-12 medium-6 large-3 cell">
                                 <label>
                                     <select id="servicesDesired" name="servicesDesired" aria-errormessage="serviceDesiredErrorField" required>
                                         <option value="">Services Desired</option>
@@ -149,10 +153,10 @@
                             </div>
                             <div class="small-12 cell">
                                 <label>
-                                    <textarea id="message" name="message" placeholder="My Message to company - Optional -"></textarea>
+                                    <textarea id="message" name="message" placeholder="Message to company - Optional -"></textarea>
                                 </label>
                             </div>
-                            <div class="small-12 cell">
+                            <div class="small-12 medium-3 cell">
                                 <input type="submit" class="button expanded" value="Send Message">
                             </div>
                         </div>
