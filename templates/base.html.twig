@@ -21,8 +21,16 @@
                 <div class="cell text-right">
                     {% if app.request.get('_route') != "home" %}
                         <a href="{{ path('home') }}">Find an Upholsterer</a>
+                        <br>
+                    {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if app.request.get('_route') != "admin" %}
+                            <a href="{{ path('admin') }}">Admin Home</a>
+                        {% endif %}
                     {% else %}
-                        <a href="{{ path('app_login') }}">Admin Login</a>
+                        {% if app.request.get('_route') != "app_login" %}
+                            <a href="{{ path('app_login') }}">Admin Login</a>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

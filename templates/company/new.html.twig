@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Upholsterer{% endblock %}
+
+{% block body %}
+	<article class="grid-container">
+	    <div class="grid-x top-margin-2em">
+	        <div class="cell">
+	        	<a href="{{ path('company_index') }}">Back to Upholsterers list</a>
+
+	        	<hr>
+	        	<h1>Create new Upholsterer</h1>
+
+	        	{{ include('company/_form.html.twig') }}
+	        </div>
+	    </div>
+	</article>
+{% endblock %}

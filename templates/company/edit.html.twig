@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Upholsterer{% endblock %}
+
+{% block body %}
+	<article class="grid-container">
+	    <div class="grid-x top-margin-2em">
+	        <div class="cell">
+	        	<a href="{{ path('company_index') }}">Back to Upholsterers list</a>
+
+	        	{{ include('company/_delete_form.html.twig') }}
+
+	        	<hr>
+	        	<h1>Edit Upholsterer</h1>
+
+	        	{{ include('company/_form.html.twig', {'button_label': 'Update'}) }}
+	        </div>
+	    </div>
+	</article>
+{% endblock %}

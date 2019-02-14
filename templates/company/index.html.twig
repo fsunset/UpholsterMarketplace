@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Upholsterers{% endblock %}
+
+{% block body %}
+    <article class="grid-container">
+        <div class="grid-x top-margin-2em">
+            <div class="cell">
+                <a href="{{ path('company_new') }}">Create new Upholsterer</a>
+
+                <hr>
+                <h1>Upholsterers</h1>
+
+                <div class="table-scroll">
+                    <table class="hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Website</th>
+                                <th>Address 1</th>
+                                <th>Address 2</th>
+                                <th>State</th>
+                                <th>County</th>
+                                <th>City</th>
+                                <th>Zip</th>
+                                <th>Tagline</th>
+                                <th>Description</th>
+                                <th>Specialty 1</th>
+                                <th>Specialty 2</th>
+                                <th>Specialty 3</th>
+                                <th>Logo</th>
+                                <th>Owner Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for company in companies %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('company_show', {'id': company.id}) }}">show</a>
+                                    <a href="{{ path('company_edit', {'id': company.id}) }}">edit</a>
+                                </td>
+                                <td>{{ company.name }}</td>
+                                <td>{{ company.firstName }}</td>
+                                <td>{{ company.lastName }}</td>
+                                <td>{{ company.email }}</td>
+                                <td>{{ company.phone }}</td>
+                                <td>
+                                    {% if company.website %}Yes{% else %}No{% endif %}
+                                </td>
+                                <td>{{ company.address1 }}</td>
+                                <td>{{ company.address2 }}</td>
+                                <td>{{ company.state }}</td>
+                                <td>{{ company.county }}</td>
+                                <td>{{ company.city }}</td>
+                                <td>{{ company.zip }}</td>
+                                <td>
+                                    {{ company.tagline|length > 20 ? company.tagline|slice(0, 20) ~ '...' : company.tagline }}
+                                </td>
+                                <td>
+                                    {{ company.description|length > 20 ? company.description|slice(0, 20) ~ '...' : company.description }}
+                                </td>
+                                <td>
+                                    {{ company.specialty1|length > 20 ? company.specialty1|slice(0, 20) ~ '...' : company.specialty1 }}
+                                </td>
+                                <td>
+                                    {{ company.specialty2|length > 20 ? company.specialty2|slice(0, 20) ~ '...' : company.specialty2 }}
+                                </td>
+                                <td>
+                                    {{ company.specialty3|length > 20 ? company.specialty3|slice(0, 20) ~ '...' : company.specialty3 }}
+                                </td>
+                                <td>
+                                    {% if company.logo %}Yes{% else %}No{% endif %}
+                                </td>
+                                <td>
+                                    {% if company.ownerImage %}Yes{% else %}No{% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="21">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </article>
+{% endblock %}
