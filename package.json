@@ -15,7 +15,7 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress",
 
-        "heroku-postbuild": "webpack -p --config webpack.config.js"
+        "heroku-postbuild": "encore production --progress",
     },
     "dependencies": {
         "jquery": "^3.3.1"
