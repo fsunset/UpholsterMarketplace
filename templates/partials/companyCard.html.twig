@@ -5,7 +5,7 @@
 		{% set companyLogo = asset('build/img/company/logo/' ~ company.logo) %}
 	{% endif %}
 {% else %}
-	{% set companyLogo = 'https://www.gamian.eu/wp-content/uploads/default-placeholder.png' %}
+	{% set companyLogo = asset('build/img/img-placeholder.png') %}
 {% endif %}
 
 {% set companySlug = company.name|lower|replace({' ': '-', '\&':'and'}) %}
@@ -29,9 +29,6 @@
 		            <p class="no-bottom-margin">
 		            	{{ company.tagline|length > 55 ? company.tagline|slice(0, 55) ~ '...' : company.tagline  }}
 		            </p>
-		            {% if company.tagline|length > 55 %}
-		            	<a href="{{ path('profile', { 'companyId': company.id, 'companyName': companySlug }) }}" class="float-right">View more</a>
-		            {% endif %}
 	            {% endif %}
 			</div>
 		</div>	

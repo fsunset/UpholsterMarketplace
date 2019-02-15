@@ -11,16 +11,16 @@
         {% set companyLogo = asset('build/img/company/logo/' ~ company.logo) %}
     {% endif %}
 {% else %}
-    {% set companyLogo = 'https://www.gamian.eu/wp-content/uploads/default-placeholder.png' %}
+    {% set companyLogo = asset('build/img/img-placeholder.png') %}
 {% endif %}
 
 {% block body %}
     <article class="grid-container">
         <div class="grid-x top-margin-2em">
-            <div class="cell medium-6 text-center bottom-margin-2em">
+            <div class="cell medium-3 medium-offset-3 large-2 large-offset-4 text-center bottom-margin-2em vertical-center-content">
                 <img class="thumbnail no-bottom-margin" src="{{ companyLogo }}">
             </div>
-            <div class="cell medium-6">
+            <div class="cell medium-6 medium-up-left-padding-1em">
                 <h1>{{ company.name|title }}</h1>
                 <p class="lead no-bottom-margin">{{ company.tagline }}</p>
                 <p class="no-bottom-margin">{{ company.phone }}</p>
@@ -36,6 +36,8 @@
     <article class="grid-container top-margin-3em">
         <div class="grid-x grid-padding-x align-middle">
             <div class="cell medium-6">
+                <h2 class="bottom-margin-1em">More About {{ company.name|title }}</h2>
+
                 <p>{{ company.description|nl2br|raw }}</p>
             </div>
 
@@ -74,14 +76,14 @@
 
         <div class="grid-x grid-padding-x top-margin-2em bottom-margin-2em">
             {# Services Offered #}
-            <div class="cell medium-6">
+            <div class="cell medium-4 text-center">
                 <h2>Services Offered</h2>
 
                 <p>{{ company.specialty1 }}</p>
             </div>
 
             {# Areas Served #}
-            <div class="cell medium-3">
+            <div class="cell medium-4 text-center">
                 <h2>Areas Served</h2>
                 <ul>
                     <li>{{ company.county|title }}</li>
@@ -90,7 +92,7 @@
             </div>
 
             {# Business Hours #}
-            <div class="cell medium-3">
+            <div class="cell medium-4 text-center">
                 <h2>Business Hours</h2>
 
                 <p class="no-bottom-margin">Mon - Fri: 10am - 6pm</p>
@@ -103,7 +105,7 @@
                 <div class="grid-container top-margin-1em form-container">
                     <div class="grid-x grid-padding-x">
                         <div class="small-12 cell">
-                            <h2>Get in Touch</h2>
+                            <h2>Contact {{ company.name|title }}</h2>
                         </div>
                     </div>
 
@@ -153,7 +155,7 @@
                             </div>
                             <div class="small-12 cell">
                                 <label>
-                                    <textarea id="message" name="message" placeholder="Message to company - Optional -"></textarea>
+                                    <textarea id="message" name="message" placeholder="Message"></textarea>
                                 </label>
                             </div>
                             <div class="small-12 medium-3 cell">
@@ -174,7 +176,7 @@
             <div class="cell">
                 <h2>Reviews</h2>
                 <div class="media-object stack-for-small">
-                    <div class="media-object-section">
+                    <div class="media-object-section text-center">
                         <img class="thumbnail" src="https://placehold.it/100x100">
                     </div>
                     <div class="media-object-section">
@@ -183,7 +185,7 @@
                     </div>
                 </div>
                 <div class="media-object stack-for-small">
-                    <div class="media-object-section">
+                    <div class="media-object-section text-center">
                         <img class="thumbnail" src="https://placehold.it/100x100">
                     </div>
                     <div class="media-object-section">
@@ -192,7 +194,7 @@
                     </div>
                 </div>
                 <div class="media-object stack-for-small">
-                    <div class="media-object-section">
+                    <div class="media-object-section text-center">
                         <img class="thumbnail" src="https://placehold.it/100x100">
                     </div>
                     <div class="media-object-section">

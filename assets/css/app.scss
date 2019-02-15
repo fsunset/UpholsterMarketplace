@@ -26,6 +26,12 @@ $soft-grey:         #f5f5f5;
 
 .no-padding-left { padding-left: 0 !important; }
 .no-padding-right { padding-right: 0 !important; }
+.left-padding-1em { padding-left: 1em; }
+
+/* Medium Up */
+@media screen and (min-width: 40em) {
+	.medium-up-left-padding-1em { padding-left: 1em; }
+}
 
 /*
 * Provisional Header & Footer
@@ -47,6 +53,16 @@ $soft-grey:         #f5f5f5;
 .h1, h1, h1 a { font-size: 1.6rem; }
 .h2, h2, h2 a, h2 span { font-size: 1.2rem; }
 .h3, h3, h3 a { font-size: 1rem; }
+
+ul li { list-style: none; }
+
+.thumbnail { max-width: 80%; }
+
+.vertical-center-content {
+	display: flex;
+	justify-content: center;
+  	align-items: center; 
+}
 
 .search-form-container {
 	background: $soft-grey;
