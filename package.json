@@ -18,8 +18,11 @@
         "heroku-postbuild": "webpack -p --config ./resources/webpack/webpack.config.js"
     },
     "dependencies": {
-        "jquery": "^3.3.1",
+        "jquery": "^3.3.1"
+    },
+    "engines": {
         "node": "11.x",
-        "yarn": "1.x"
+        "yarn": "1.x",
+        "npm": "6.x"
     }
 }
