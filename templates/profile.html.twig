@@ -56,24 +56,14 @@
                             <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
                         </div>
                         <ul class="orbit-container align-middle">
-                            <li class="is-active orbit-slide">
-                                <figure class="orbit-figure">
-                                    <img class="orbit-image" src="http://www.stjohnsucccoop.org/wp-content/uploads/2018/09/Endearing-yacht-upholstery-Backyard-Plans-Free-For-custom-yacht-interior-design.jpg-Gallery.jpg" alt="detailed-upholstery">
-                                    <figcaption class="orbit-caption">Detailed Boat Upholstery</figcaption>
-                                </figure>
-                            </li>
-                            <li class="orbit-slide">
-                                <figure class="orbit-figure">
-                                    <img class="orbit-image" src="http://rvwanderlust.com/wp-content/uploads/2014/03/Before-After-RV-Upholstery-Painting.jpg" alt="Furniture">
-                                    <figcaption class="orbit-caption">Furniture Upholstery</figcaption>
-                                </figure>
-                            </li>
-                            <li class="orbit-slide">
-                                <figure class="orbit-figure">
-                                    <img class="orbit-image" src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F53707362%2F246563307534%2F1%2Foriginal.20181207-221730?w=1000&auto=compress&rect=98%2C0%2C966%2C483&s=0fc604dbaeb58f3cdbf9ad68934bfcef" alt="Gaming">
-                                    <figcaption class="orbit-caption">Gaming Tables</figcaption>
-                                </figure>
-                            </li>
+                            {% for caption, url in companyWorkPhotos %}
+                                <li class="is-active orbit-slide">
+                                    <figure class="orbit-figure">
+                                        <img class="orbit-image" src="{{ url }}" alt="{{ caption }}">
+                                        <figcaption class="orbit-caption">{{ caption }}</figcaption>
+                                    </figure>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
