@@ -56,7 +56,11 @@ $soft-grey:         #f5f5f5;
 
 ul li { list-style: none; }
 
-.thumbnail { max-width: 80%; }
+.thumbnail { 
+	max-width: 80%; 
+
+	&.large-thumbnail { max-width: 90%; }
+}
 
 .vertical-center-content {
 	display: flex;

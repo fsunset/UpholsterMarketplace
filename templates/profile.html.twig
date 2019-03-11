@@ -17,14 +17,20 @@
 {% block body %}
     <article class="grid-container">
         <div class="grid-x top-margin-2em">
-            <div class="cell medium-3 medium-offset-3 large-2 large-offset-4 text-center bottom-margin-2em vertical-center-content">
-                <img class="thumbnail no-bottom-margin" src="{{ companyLogo }}">
+            <div class="cell medium-3 bottom-margin-2em vertical-center-content">
+                <img class="thumbnail large-thumbnail no-bottom-margin" src="{{ companyLogo }}">
             </div>
-            <div class="cell medium-6 medium-up-left-padding-1em">
+            <div class="cell medium-6 medium-up-left-padding-1em text-center medium-text-left">
                 <h1>{{ company.name|title }}</h1>
                 <p class="lead no-bottom-margin">{{ company.tagline }}</p>
-                <p class="no-bottom-margin">{{ company.phone }}</p>
-                <p>{{ company.address1 }}{% if company.address2 %}, {{ company.address2 }}{% endif %}
+                <p class="no-bottom-margin">
+                    {{ company.phone|phoneNumber }}
+                </p>
+                <p class="no-bottom-margin">
+                    {{ company.address1 }}{% if company.address2 %}, {{ company.address2 }}{% endif %}
+                </p>
+                <p>
+                    {{ company.city }}, {{ company.state }} {{ company.zip }}
                 </p>
                 <a href="{{ company.website }}" target="_blank" class="button hollow">Visit Website</a>
             </div>

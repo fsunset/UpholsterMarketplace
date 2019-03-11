@@ -24,9 +24,9 @@
                                 <th>Website</th>
                                 <th>Address 1</th>
                                 <th>Address 2</th>
-                                <th>State</th>
-                                <th>County</th>
                                 <th>City</th>
+                                <th>County</th>
+                                <th>State</th>
                                 <th>Zip</th>
                                 <th>Tagline</th>
                                 <th>Description</th>
@@ -54,9 +54,9 @@
                                 </td>
                                 <td>{{ company.address1 }}</td>
                                 <td>{{ company.address2 }}</td>
-                                <td>{{ company.state }}</td>
-                                <td>{{ company.county }}</td>
                                 <td>{{ company.city }}</td>
+                                <td>{{ company.county }}</td>
+                                <td>{{ company.state }}</td>
                                 <td>{{ company.zip }}</td>
                                 <td>
                                     {{ company.tagline|length > 20 ? company.tagline|slice(0, 20) ~ '...' : company.tagline }}
