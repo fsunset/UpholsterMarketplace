@@ -1,7 +1,7 @@
 {
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.6.1",
-        "@symfony/webpack-encore": "^0.22.0",
+        "@symfony/webpack-encore": "^0.27.0",
         "copy-webpack-plugin": "^4.6.0",
         "node-sass": "^4.11.0",
         "sass-loader": "^7.0.1",
@@ -14,7 +14,6 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress",
-
         "heroku-postbuild": "encore production --progress"
     },
     "dependencies": {
