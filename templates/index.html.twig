@@ -80,4 +80,112 @@
     </article>
 {% endblock %}
 
+{% block javascripts %}
+	{{ parent() }}
 
+    <script src="http://vikku.info/programming/js/geodata-jsr-class.js"></script>
+    <script>
+		$(function() {
+			// Load All U.S.A. States
+			getplaces(6252001,'state');
+
+			let selectedState = selectedCounty = selectedCity = '',
+				$searchCompanyForm = $("#searchCompanyForm"),
+				$searchCompanyFormError = $("#searchCompanyFormError"),
+				$companiesContainer = $("#companiesContainer"),
+				$cityTopCompanies = $(".city-top-companies"),
+				$countyDropdown = $("#county"),
+				$cityDropdown = $("#city");
+
+		    $(document)
+		    	// Set location vars for AJAX call
+		    	.on("change", "#state, #county, #city", function() {
+		    		let thisId = $(this).attr("id");
+
+		    		switch(thisId) {
+		    			case "state":
+		    			selectedState = $("#" + thisId + " option:selected").text();
+		    			selectedCounty = selectedCity = '';
+		    			$countyDropdown.html("<option value=''>Loading...</option>");
+		    			$cityDropdown.html("");
+		    			break;
+		    			case "county":
+		    			selectedCounty = $("#" + thisId + " option:selected").text();
+		    			selectedCity = '';
+		    			$cityDropdown.html("<option value=''>Loading...</option>");
+		    			break;
+		    			case "city":
+		    			selectedCity = $("#" + thisId + " option:selected").text();
+		    			break;
+		    		}
+		    	})
+			    
+			    // Run function to search each dropdown "child"
+			    .on("change", "#state, #county", function() {
+			    	let $this = $(this),
+			    		elementValue = $this.val(),
+			    		elementType = $this.attr("id"),
+			    		param = elementType == "state" ? "county" : "city";
+
+			    	getplaces(elementValue, param);
+			    });
+			
+			$searchCompanyForm.on("submit", function(e) {
+				e.preventDefault();
+
+				if (selectedState != '' && selectedCounty != '' && selectedCity != '' && selectedState != 'Select' && selectedCounty != 'Select' && selectedCity != 'Select') {
+					performCompanySearch();
+				}
+			});
+
+			// Get companies by location
+			function performCompanySearch() {
+		    	$.ajax({
+		    		type: "POST",
+		    		url: "{{ path('searchCompany') }}",
+		    		data: {
+		    			"selectedState": selectedState,
+		    			"selectedCounty": selectedCounty,
+		    			"selectedCity": selectedCity
+		    		},
+		    		beforeSend: function() {
+		    			$companiesContainer.html("<div class='small-12 cell text-center'><img src='{{ asset('build/img/spinner.gif') }}'></div>");
+				    },
+		    		success: function(companies) {
+		    			$cityTopCompanies.html(selectedCity);
+		    			$companiesContainer.html("<div class='grid-x grid-margin-x'>" + companies.htmlCode + "</div>");
+		    		},
+		    		error: function(xhr, status, error) {
+		    			var err = eval("(" + xhr.responseText + ")");
+		    			alert(err.Message);
+		    		}
+		    	});
+		    }
+		});
+
+	    
+		// Geonames JS code
+	    let whos = request = null;
+		function getplaces(gid, src) {
+			whos = src
+			request = "http://www.geonames.org/childrenJSON?geonameId="+gid+"&callback=listPlaces&style=short";
+			aObj = new JSONscriptRequest(request);
+			aObj.buildScriptTag();
+			aObj.addScriptTag();
+		}
+
+		function listPlaces(jData) {
+			counts = jData.geonames.length<jData.totalResultsCount ? jData.geonames.length : jData.totalResultsCount
+			who = document.getElementById(whos)
+			who.options.length = 0;
+
+			if(counts)who.options[who.options.length] = new Option('Select','')
+			else who.options[who.options.length] = new Option('No Data Available','NULL')
+					
+			for(let i=0; i<counts; i++)
+				who.options[who.options.length] = new Option(jData.geonames[i].name, jData.geonames[i].geonameId)
+
+			jData = null		
+		}
+    </script>
+{% endblock %}
