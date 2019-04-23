@@ -38,7 +38,7 @@
 var whos = null;
 function getplaces(gid,src) {
 	whos = src
-	var request = "https://www.geonames.org/childrenJSON?geonameId="+gid+"&callback=listPlaces&style=long";
+	var request = "http://www.geonames.org/childrenJSON?geonameId="+gid+"&callback=listPlaces&style=long";
 	aObj = new JSONscriptRequest(request);
 	aObj.buildScriptTag();
 	aObj.addScriptTag();	
