@@ -168,7 +168,7 @@
 	    let whos = request = null;
 		function getplaces(gid, src) {
 			whos = src
-			request = "http://www.geonames.org/childrenJSON?geonameId="+gid+"&callback=listPlaces&style=short";
+			request = "https://www.geonames.org/childrenJSON?geonameId="+gid+"&callback=listPlaces&style=short";
 			aObj = new JSONscriptRequest(request);
 			aObj.buildScriptTag();
 			aObj.addScriptTag();
