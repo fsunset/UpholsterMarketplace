@@ -182,8 +182,11 @@
 			if(counts)who.options[who.options.length] = new Option('Select','')
 			else who.options[who.options.length] = new Option('No Data Available','NULL')
 					
-			for(let i=0; i<counts; i++)
-				who.options[who.options.length] = new Option(jData.geonames[i].name, jData.geonames[i].geonameId)
+			for(let i=0; i<counts; i++){
+				if(!jData.geonames[i].name.includes("City of")){
+					who.options[who.options.length] = new Option(jData.geonames[i].name, jData.geonames[i].geonameId);
+				}
+			}
 
 			jData = null		
 		}
