@@ -58,6 +58,9 @@ Encore
     .addPlugin(new CopyWebpackPlugin([
         { from: "./assets/img", to: "img" }
     ]))
+    .addPlugin(new CopyWebpackPlugin([
+        { from: "./assets/js", to: "js" }
+    ]))
     ;
 
     module.exports = Encore.getWebpackConfig();
